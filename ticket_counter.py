@@ -43,6 +43,8 @@ class TicketCounter:
 
     def __display_trains_list(self, start , end):
         trains = self.__search_trains(start, end)
+        if(len(trains) == 0):
+            return None
         choicesMap = {}
         idx = 1
         print(f'Choose the train : ')
@@ -55,13 +57,17 @@ class TicketCounter:
 
     def __getChoice(self, choicesMap, numberOfChoices):
         if not choicesMap:
-            return "there are no choices"
-        while(True):
-            choice = int(input("Enter your choice :"))
-            if(choice > 0 and choice <= numberOfChoices):
-                return choice
-            else:
-                print("Enter a valid Choice".center(21,'!'))
+            return "There are no choices available."
+
+        while True:
+            try:
+                choice = int(input("Enter your choice: "))
+                if 1 <= choice <= numberOfChoices:
+                    return choice
+                else:
+                    print("! Enter a valid choice !".center(30, '!'))
+            except ValueError:
+                print("Please enter a valid numeric choice!")
 
     def display_stops_list(self):
         idx = 1
@@ -99,6 +105,11 @@ class TicketCounter:
     def generate_Ticket(self, startingPoint, endingPoint):
         os.system("cls")
         train = self.__display_trains_list(startingPoint, endingPoint)
+
+        if not train:
+            print(f"No trains Available for {startingPoint} to {endingPoint}")
+            return None
+
         totalFare, totalDistance = self.__compute_fare_and_distance(train, startingPoint, endingPoint, fare = 0.5)
         os.system("cls")
         if(train.time_schedule["departure"] > get_current_time()):

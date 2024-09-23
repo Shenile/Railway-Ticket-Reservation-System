@@ -11,7 +11,7 @@ StationsAndDistanceChart1 = {
 
 time_schedule = {
     "departure" : get_current_time(5),
-    "arrival" : get_current_time(5)
+    "arrival" : get_current_time(10)
 }
 train1 = Train("Rameswaram Express", 2453725,
                "chennai", "rameswaram",
